@@ -1,7 +1,9 @@
 namespace SpriteKind {
     export const Environment = SpriteKind.create()
 }
+// This is decided by the players first choice. As the player presses B (has chosen the cave route), it triggers this if conditional. The text dialogue continues, describing the players choice, sprites and offers the next set of choices. 
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    // As the variable B is set at 0, it will only start from this position at the start of the game, after the player has chosen B for their first choice. 
     if (B == 0) {
         Cave.setImage(assets.image`myImage`)
         Cave.setPosition(80, 40)
@@ -48,14 +50,17 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             ........................
             `)
         adventure.clearTextLog()
+        // By decreasing A & B variables by one, it stops the other if conditional from being run. The negative numbers indicate that the player has first chosen B and sets up the further set of choices. 
         A += -1
         B += -1
+        // The dialogue continues for the cave choice. 
         adventure.addToTextlog("You've chosen the Cave!")
         pause(1500)
         adventure.clearTextLog()
         adventure.addToTextlog("Entering into the cave you see most of the light receding behind you.")
         pause(3000)
         adventure.clearTextLog()
+        // Moves the sprites to correlate with the next choice (the lower and upper path) 
         Tree.setPosition(75, 40)
         Cave.setPosition(80, 45)
         Cave.setImage(assets.image`myImage1`)
@@ -73,8 +78,55 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         pause(2000)
         adventure.clearTextLog()
     }
+    // Making use of the global variable, the next time the player presses B the game will check if the player has chosen A initially. Because B=1, it means they have chosen A initially this is the next subsequent choice. 
+    // A(first choice) -> B(second choice) 
+    if (B == 1) {
+        B += 1
+        adventure.addToTextlog("You chose to continue walking alongside the river.")
+        pause(2000)
+        adventure.clearTextLog()
+        adventure.addToTextlog("As the sun is continues to set, your nerves begin to grow.")
+        // This changes the appearance of the sprites, corresponding with the dialogue.
+        Tree.setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . 4 . . . . . 
+            . . . . 2 . . . . 4 4 . . . . . 
+            . . . . 2 4 . . 4 5 4 . . . . . 
+            . . . . . 2 4 d 5 5 4 . . . . . 
+            . . . . . 2 5 5 5 5 4 . . . . . 
+            . . . . . . 2 5 5 5 5 4 . . . . 
+            . . . . . . 2 5 4 2 4 4 . . . . 
+            . . . . . . 4 4 . . 2 4 4 . . . 
+            . . . . . 4 4 . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `)
+        Tree.setPosition(80, 40)
+        pause(2500)
+        adventure.clearTextLog()
+        adventure.addToTextlog("You approach a small house that looks run down and abandoned. ")
+        pause(2500)
+        adventure.clearTextLog()
+        adventure.addToTextlog("You decide your best option is to go inside. ")
+        pause(2500)
+        // The dialogue informs the player of the two choices and the corresponding buttons. 
+        adventure.addToTextlog("Inside the house you see a mobile phone sitting on a table. ")
+        pause(2000)
+        adventure.clearTextLog()
+        adventure.addToTextlog("Using the phone you are able to call emergency services for help!")
+        pause(2000)
+        // This signals the end of the game and creates a splash screen that says the player has won. 
+        game.gameOver(true)
+    }
+    // This if conditional checks if the global variable B is a negative, which would mean that the player has chosen B for their first choice. After pressing B the dialogue continues leading to a winning ending. 
+    // 
+    // B(first choice) -> A(second choice)
     if (B == -1) {
-        B += -1
+        adventure.clearTextLog()
         Tree.setImage(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -97,26 +149,18 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         adventure.addToTextlog("You chose the lower path.")
         pause(2500)
         adventure.clearTextLog()
-        adventure.addToTextlog("The sun has set as you continue walking. You reach a main road!")
-        pause(2000)
-        adventure.clearTextLog()
-        adventure.addToTextlog("As cars pass you manage to signal for help.")
-        pause(2000)
-        adventure.addToTextlog("A kind stranger assists you. You're saved!!")
-        game.gameOver(true)
-    }
-    if (B == 1) {
-        River.setImage(img`
+        // The sprites continue to change to correspond with the dialogue. 
+        Cave.setImage(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
+            . . . . . . . 4 4 . . . . . . . 
+            . . . . . . 4 5 5 4 . . . . . . 
+            . . . . . . 2 5 5 2 . . . . . . 
+            . . . . . . . 2 2 . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -124,22 +168,48 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `)
-        B += 1
-        adventure.addToTextlog("You chose to continue walking.")
-        pause(2500)
-        adventure.clearTextLog()
-        Tree.setImage(assets.image`myImage0`)
-        adventure.addToTextlog("The sun has set as you continue walking. You reach a main road!")
+        adventure.addToTextlog("Eventually, you see a light at the end of the cave")
         pause(2000)
         adventure.clearTextLog()
-        adventure.addToTextlog("As cars pass you manage to signal for help.")
+        Cave.setImage(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . 4 . . . . . 
+            . . . . 2 . . . . 4 4 . . . . . 
+            . . . . 2 4 . . 4 5 4 . . . . . 
+            . . . . . 2 4 d 5 5 4 . . . . . 
+            . . . . . 2 5 5 5 5 4 . . . . . 
+            . . . . . . 2 5 5 5 5 4 . . . . 
+            . . . . . . 2 5 4 2 4 4 . . . . 
+            . . . . . . 4 4 . . 2 4 4 . . . 
+            . . . . . 4 4 . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `)
+        adventure.addToTextlog("The area looks familiar.")
+        pause(1500)
+        adventure.clearTextLog()
+        Cave.setImage(assets.image`myImage4`)
+        adventure.addToTextlog("You realise the light is coming from a nearby carpark, a street lamp.")
         pause(3000)
-        adventure.addToTextlog("A kind stranger assists you. You're saved!!")
+        adventure.clearTextLog()
+        adventure.addToTextlog("You realise this is the start of the trail, leading back to where you began with your friends ")
+        pause(3500)
+        adventure.clearTextLog()
+        adventure.addToTextlog("You see them waiting for you in the distance. You are saved!!")
+        pause(1500)
+        // This signals the end of the game and creates a splash screen that says the player has won. 
         game.gameOver(true)
     }
 })
+// This is decided by the players first choice. As the player presses A (has chosen the tree route), it triggers this if conditional. The text dialogue continues, describing the players choice, sprites and offers the next set of choices. 
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    // As the variable A is set at 0, it will only start from this position at the start of the game, after the player has chosen A for their first choice. 
     if (A == 0) {
+        // Hides the cave image, as the player has chosen the tree route. 
         Cave.setImage(img`
             ........................
             ........................
@@ -182,9 +252,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             ........................
             ........................
             `)
+        // By increasing A & B variables by one, it stops the other if conditional from being run. The positive numbers indicate that the player has first chosen A and sets up the further set of choices. 
         A += 1
         B += 1
         Tree.setPosition(80, 40)
+        // Sets the tree to the main sprite.
         Tree.setImage(img`
             ........................
             8..........ff..........8
@@ -227,6 +299,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             feef....feeefeef....feee
             ffef....fefeffef....fefe
             `)
+        // The dialogue continues for the first choice, 
         adventure.addToTextlog("You've chosen the tree!")
         pause(1500)
         adventure.clearTextLog()
@@ -276,33 +349,23 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             ........................
             ........................
             `)
+        // Sets the scene to being a river, as the dialogue changes the sprite coincides. 
         River.setImage(assets.image`myImage3`)
         pause(2000)
         adventure.clearTextLog()
         adventure.addToTextlog("You can either try to cross the river, or continue walking aside it. ")
         pause(2500)
         adventure.clearTextLog()
+        // The dialogue informs the player of the two choices and the corresponding buttons. 
         adventure.addToTextlog("Cross (A)   Continue (B)")
         pause(2500)
         adventure.clearTextLog()
     }
+    // Making use of the global variable, the next time the player presses A the game will check if the player has chosen A initially. Because A=1, it means they have chosen A a second time, which leads to a losing ending. A(first choice) -> A(second choice) 
     if (A == 1) {
-        A += 1
-        adventure.addToTextlog("You chose to cross the river.")
-        pause(2000)
         adventure.clearTextLog()
-        adventure.addToTextlog("You face a strong current that is sweeping you with it. ")
-        pause(3000)
-        adventure.clearTextLog()
-        River.setPosition(80, 35)
-        River.setImage(assets.image`myImages.image0`)
-        adventure.addToTextlog("Tired of fighting the current, you reach your demise and drown! ")
-        pause(2500)
-        adventure.clearTextLog()
-        game.gameOver(false)
-    }
-    if (A == -1) {
         Tree.setPosition(80, 40)
+        // This hides the cave as the player has made another choice. 
         Cave.setImage(img`
             ........................
             ........................
@@ -345,7 +408,70 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             ........................
             ........................
             `)
-        A += -1
+        adventure.addToTextlog("You chose to cross the river")
+        pause(2000)
+        adventure.clearTextLog()
+        adventure.addToTextlog("There is a strong current pulling you downstream")
+        pause(2000)
+        adventure.clearTextLog()
+        // Setting the sprite to a skull to indicate the player has lost. 
+        River.setImage(assets.image`myImages.image0`)
+        adventure.addToTextlog("You exhaust yourself fighting the current and drown!!")
+        pause(3000)
+        Tree.setImage(assets.image`myImages.image0`)
+        adventure.clearTextLog()
+        // This signals the end of the game and creates a splash screen that says the player has lost. 
+        game.gameOver(false)
+    }
+    // This if conditional checks if the global variable A is a negative, which would mean that the player has chosen B for their first choice. After pressing A this dialogue appears and shows a losing ending. 
+    // 
+    // B(first choice) -> A(second choice)
+    if (A == -1) {
+        adventure.clearTextLog()
+        Tree.setPosition(80, 40)
+        // This hides the cave as the player has made another choice. 
+        Cave.setImage(img`
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            ........................
+            `)
         adventure.addToTextlog("You chose the upper path.")
         pause(2000)
         adventure.clearTextLog()
@@ -359,6 +485,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Tree.setImage(assets.image`myImages.image0`)
         pause(3000)
         adventure.clearTextLog()
+        // This signals the end of the game and creates a splash screen that says the player has lost. 
         game.gameOver(false)
     }
 })
@@ -367,17 +494,24 @@ let River: Sprite = null
 let Tree: Sprite = null
 let B = 0
 let A = 0
-// Begin of introduction
+// Beginning of introduction, setting the background colour for the rest of the game 
 scene.setBackgroundColor(11)
+// Creating global variable A to signify the player choosing A initially and sets it to 0 to show that no choice has been made yet. 
 A = 0
+// Creating global variable B to signify the player choosing A initially and sets it to 0 to show that no choice has been made yet. 
 B = 0
+// The first introductory text, adding a sentence of text to the text log that scrolls from the bottom of screen
 adventure.addToTextlog("Welcome to Page Play! A choose your adventure video game with challenging decisions and surprising endings. ")
+// Pauses to allow time for each dialogue to appear and to be read 
 pause(2000)
+// Clears text log to remove old dialogue and create space for the next line of text 
 adventure.clearTextLog()
 adventure.addToTextlog("You can interact with this game using 'A' and 'B' to decide between two options. Restart to try different endings! ")
 pause(2000)
 adventure.clearTextLog()
+// Creates a splash screen that signifies the start of the game, waiting for players to press A to begin 
 game.splash("Your adventure awaits...")
+// Creates the first sprite for option A (tree path), that will later be changed. The kind is set to environment to describe that it will act as a sprite for each option. 
 Tree = sprites.create(img`
     ...................................................................
     ...................................................................
@@ -465,6 +599,7 @@ Tree = sprites.create(img`
     ...................................................................
     ...................................................................
     `, SpriteKind.Environment)
+// Creates the first sprite for option B (cave path), that will later be changed. The kind is set to environment to describe that it will act as a sprite for each option. 
 River = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -483,7 +618,9 @@ River = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Environment)
+// Set the sprites position to the middle of the screen, as it is a small sprite that will change its appearance for each consequential choice.
 Tree.setPosition(80, 35)
+// The river is a large background sprite that needs to cover the entire screen, therefore its X and Y position is very low to appear in the bottom right corner. 
 River.setPosition(7, 0)
 Tree.setStayInScreen(true)
 adventure.addToTextlog("You awaken in an open forest clearing, unsure how you ended up there. ")
@@ -492,6 +629,7 @@ adventure.clearTextLog()
 adventure.addToTextlog("You panic. Realising you had earlier been on a hike with your friends, which are now nowhere to be found. The sun is now almost set.")
 pause(4000)
 adventure.clearTextLog()
+// The first change in sprite appearance as the dialogue change, the sprite changes to match. 
 Tree.setImage(img`
     ........................
     8..........ff..........8
@@ -534,7 +672,9 @@ Tree.setImage(img`
     feef....feeefeef....feee
     ffef....fefeffef....fefe
     `)
+// Moves the sprite to an appropriate place to be seen 
 Tree.setPosition(60, 40)
+// Changing the appearance of the cave to show the two options, as the player makes the first decision 
 Cave = sprites.create(assets.image`myImage`, SpriteKind.Environment)
 Cave.setPosition(105, 40)
 adventure.addToTextlog("In your surroundings you see a clearing between two trees, or a cave opening.")
@@ -543,6 +683,7 @@ adventure.clearTextLog()
 adventure.addToTextlog("Which will you choose?")
 pause(1000)
 adventure.clearTextLog()
+// The dialogue informs the player of the two choices and the corresponding buttons. 
 adventure.addToTextlog("Tree (A)       Cave (B)")
 pause(2000)
 adventure.clearTextLog()

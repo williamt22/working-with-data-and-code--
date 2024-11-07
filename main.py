@@ -80,8 +80,24 @@ def on_b_pressed():
         adventure.add_to_textlog("Upper (A)     Lower (B)")
         pause(2000)
         adventure.clear_text_log()
+    if B == 1:
+        B += 1
+        adventure.add_to_textlog("You chose to continue walking alongside the river.")
+        pause(2000)
+        adventure.clear_text_log()
+        adventure.add_to_textlog("As the sun is continues to set, your nerves begin to grow.")
+        pause(2500)
+        adventure.clear_text_log()
+        adventure.add_to_textlog("You approach a small house that looks run down and abandoned. ")
+        pause(2500)
+        adventure.clear_text_log()
+        adventure.add_to_textlog("You can either choose to go inside, or continue walking in the direction you have been.")
+        pause(3000)
+        adventure.add_to_textlog("Enter (A)     Continue (B)")
+        pause(2000)
+        adventure.clear_text_log()
     if B == -1:
-        B += -1
+        adventure.clear_text_log()
         Tree.set_image(img("""
             . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
@@ -104,25 +120,17 @@ def on_b_pressed():
         adventure.add_to_textlog("You chose the lower path.")
         pause(2500)
         adventure.clear_text_log()
-        adventure.add_to_textlog("The sun has set as you continue walking. You reach a main road!")
-        pause(2000)
-        adventure.clear_text_log()
-        adventure.add_to_textlog("As cars pass you manage to signal for help.")
-        pause(2000)
-        adventure.add_to_textlog("A kind stranger assists you. You're saved!!")
-        game.game_over(True)
-    if B == 1:
-        River.set_image(img("""
+        Cave.set_image(img("""
             . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
-                        . . . . . . . . . . . . . . . . 
-                        . . . . . . . . . . . . . . . . 
-                        . . . . . . . . . . . . . . . . 
-                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . 4 4 . . . . . . . 
+                        . . . . . . 4 5 5 4 . . . . . . 
+                        . . . . . . 2 5 5 2 . . . . . . 
+                        . . . . . . . 2 2 . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
@@ -130,19 +138,41 @@ def on_b_pressed():
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . .
         """))
-        B += 1
-        adventure.add_to_textlog("You chose to continue walking.")
-        pause(2500)
-        adventure.clear_text_log()
-        Tree.set_image(assets.image("""
-            myImage0
-        """))
-        adventure.add_to_textlog("The sun has set as you continue walking. You reach a main road!")
+        adventure.add_to_textlog("Eventually, you see a light at the end of the cave")
         pause(2000)
         adventure.clear_text_log()
-        adventure.add_to_textlog("As cars pass you manage to signal for help.")
+        Cave.set_image(img("""
+            . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . 4 . . . . . 
+                        . . . . 2 . . . . 4 4 . . . . . 
+                        . . . . 2 4 . . 4 5 4 . . . . . 
+                        . . . . . 2 4 d 5 5 4 . . . . . 
+                        . . . . . 2 5 5 5 5 4 . . . . . 
+                        . . . . . . 2 5 5 5 5 4 . . . . 
+                        . . . . . . 2 5 4 2 4 4 . . . . 
+                        . . . . . . 4 4 . . 2 4 4 . . . 
+                        . . . . . 4 4 . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . .
+        """))
+        adventure.add_to_textlog("The area looks familiar.")
+        pause(1500)
+        adventure.clear_text_log()
+        Cave.set_image(assets.image("""
+            myImage4
+        """))
+        adventure.add_to_textlog("You realise the light is coming from a nearby carpark, a street lamp.")
         pause(3000)
-        adventure.add_to_textlog("A kind stranger assists you. You're saved!!")
+        adventure.clear_text_log()
+        adventure.add_to_textlog("You realise this is the start of the trail, leading back to where you began with your friends ")
+        pause(3500)
+        adventure.clear_text_log()
+        adventure.add_to_textlog("You see them waiting for you in the distance. You are saved!!")
+        pause(1500)
         game.game_over(True)
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
 
@@ -297,22 +327,7 @@ def on_a_pressed():
         pause(2500)
         adventure.clear_text_log()
     if A == 1:
-        A += 1
-        adventure.add_to_textlog("You chose to cross the river.")
-        pause(2000)
         adventure.clear_text_log()
-        adventure.add_to_textlog("You face a strong current that is sweeping you with it. ")
-        pause(3000)
-        adventure.clear_text_log()
-        River.set_position(80, 35)
-        River.set_image(assets.image("""
-            myImages.image0
-        """))
-        adventure.add_to_textlog("Tired of fighting the current, you reach your demise and drown! ")
-        pause(2500)
-        adventure.clear_text_log()
-        game.game_over(False)
-    if A == -1:
         Tree.set_position(80, 40)
         Cave.set_image(img("""
             ........................
@@ -356,7 +371,67 @@ def on_a_pressed():
                         ........................
                         ........................
         """))
-        A += -1
+        adventure.add_to_textlog("You chose to cross the river")
+        pause(2000)
+        adventure.clear_text_log()
+        adventure.add_to_textlog("There is a strong current pulling you downstream")
+        pause(2000)
+        adventure.clear_text_log()
+        River.set_image(assets.image("""
+            myImages.image0
+        """))
+        adventure.add_to_textlog("You exhaust yourself fighting the current and drown!!")
+        pause(3000)
+        Tree.set_image(assets.image("""
+            myImages.image0
+        """))
+        adventure.clear_text_log()
+        game.game_over(False)
+    if A == -1:
+        adventure.clear_text_log()
+        Tree.set_position(80, 40)
+        Cave.set_image(img("""
+            ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+        """))
         adventure.add_to_textlog("You chose the upper path.")
         pause(2000)
         adventure.clear_text_log()
