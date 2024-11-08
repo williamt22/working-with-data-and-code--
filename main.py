@@ -1,9 +1,11 @@
 @namespace
 class SpriteKind:
     Environment = SpriteKind.create()
+# This is decided by the players first choice. As the player presses B (has chosen the cave route), it triggers this if conditional. The text dialogue continues, describing the players choice, sprites and offers the next set of choices. 
 
 def on_b_pressed():
     global A, B
+    # As the variable B is set at 0, it will only start from this position at the start of the game, after the player has chosen B for their first choice. 
     if B == 0:
         Cave.set_image(assets.image("""
             myImage
@@ -52,14 +54,17 @@ def on_b_pressed():
                         ........................
         """))
         adventure.clear_text_log()
+        # By decreasing A & B variables by one, it stops the other if conditional from being run. The negative numbers indicate that the player has first chosen B and sets up the further set of choices. 
         A += -1
         B += -1
+        # The dialogue continues for the cave choice. 
         adventure.add_to_textlog("You've chosen the Cave!")
         pause(1500)
         adventure.clear_text_log()
         adventure.add_to_textlog("Entering into the cave you see most of the light receding behind you.")
         pause(3000)
         adventure.clear_text_log()
+        # Moves the sprites to correlate with the next choice (the lower and upper path) 
         Tree.set_position(75, 40)
         Cave.set_position(80, 45)
         Cave.set_image(assets.image("""
@@ -80,22 +85,52 @@ def on_b_pressed():
         adventure.add_to_textlog("Upper (A)     Lower (B)")
         pause(2000)
         adventure.clear_text_log()
+    # Making use of the global variable, the next time the player presses B the game will check if the player has chosen A initially. Because B=1, it means they have chosen A initially this is the next subsequent choice. 
+    # A(first choice) -> B(second choice) 
     if B == 1:
         B += 1
         adventure.add_to_textlog("You chose to continue walking alongside the river.")
         pause(2000)
         adventure.clear_text_log()
         adventure.add_to_textlog("As the sun is continues to set, your nerves begin to grow.")
+        # This changes the appearance of the sprites, corresponding with the dialogue.
+        Tree.set_image(img("""
+            . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . 4 . . . . . 
+                        . . . . 2 . . . . 4 4 . . . . . 
+                        . . . . 2 4 . . 4 5 4 . . . . . 
+                        . . . . . 2 4 d 5 5 4 . . . . . 
+                        . . . . . 2 5 5 5 5 4 . . . . . 
+                        . . . . . . 2 5 5 5 5 4 . . . . 
+                        . . . . . . 2 5 4 2 4 4 . . . . 
+                        . . . . . . 4 4 . . 2 4 4 . . . 
+                        . . . . . 4 4 . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . .
+        """))
+        Tree.set_position(80, 40)
         pause(2500)
         adventure.clear_text_log()
         adventure.add_to_textlog("You approach a small house that looks run down and abandoned. ")
         pause(2500)
         adventure.clear_text_log()
-        adventure.add_to_textlog("You can either choose to go inside, or continue walking in the direction you have been.")
-        pause(3000)
-        adventure.add_to_textlog("Enter (A)     Continue (B)")
+        adventure.add_to_textlog("You decide your best option is to go inside. ")
+        pause(2500)
+        # The dialogue informs the player of the two choices and the corresponding buttons. 
+        adventure.add_to_textlog("Inside the house you see a mobile phone sitting on a table. ")
         pause(2000)
         adventure.clear_text_log()
+        adventure.add_to_textlog("Using the phone you are able to call emergency services for help!")
+        pause(2000)
+        # This signals the end of the game and creates a splash screen that says the player has won. 
+        game.game_over(True)
+    # This if conditional checks if the global variable B is a negative, which would mean that the player has chosen B for their first choice. After pressing B the dialogue continues leading to a winning ending. 
+    # 
+    # B(first choice) -> A(second choice)
     if B == -1:
         adventure.clear_text_log()
         Tree.set_image(img("""
@@ -120,6 +155,7 @@ def on_b_pressed():
         adventure.add_to_textlog("You chose the lower path.")
         pause(2500)
         adventure.clear_text_log()
+        # The sprites continue to change to correspond with the dialogue. 
         Cave.set_image(img("""
             . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
@@ -173,12 +209,17 @@ def on_b_pressed():
         adventure.clear_text_log()
         adventure.add_to_textlog("You see them waiting for you in the distance. You are saved!!")
         pause(1500)
+        # This signals the end of the game and creates a splash screen that says the player has won. 
         game.game_over(True)
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
 
+# This is decided by the players first choice. As the player presses A (has chosen the tree route), it triggers this if conditional. The text dialogue continues, describing the players choice, sprites and offers the next set of choices. 
+
 def on_a_pressed():
     global A, B
+    # As the variable A is set at 0, it will only start from this position at the start of the game, after the player has chosen A for their first choice. 
     if A == 0:
+        # Hides the cave image, as the player has chosen the tree route. 
         Cave.set_image(img("""
             ........................
                         ........................
@@ -221,9 +262,11 @@ def on_a_pressed():
                         ........................
                         ........................
         """))
+        # By increasing A & B variables by one, it stops the other if conditional from being run. The positive numbers indicate that the player has first chosen A and sets up the further set of choices. 
         A += 1
         B += 1
         Tree.set_position(80, 40)
+        # Sets the tree to the main sprite.
         Tree.set_image(img("""
             ........................
                         8..........ff..........8
@@ -266,6 +309,7 @@ def on_a_pressed():
                         feef....feeefeef....feee
                         ffef....fefeffef....fefe
         """))
+        # The dialogue continues for the first choice, 
         adventure.add_to_textlog("You've chosen the tree!")
         pause(1500)
         adventure.clear_text_log()
@@ -315,6 +359,7 @@ def on_a_pressed():
                         ........................
                         ........................
         """))
+        # Sets the scene to being a river, as the dialogue changes the sprite coincides. 
         River.set_image(assets.image("""
             myImage3
         """))
@@ -323,12 +368,15 @@ def on_a_pressed():
         adventure.add_to_textlog("You can either try to cross the river, or continue walking aside it. ")
         pause(2500)
         adventure.clear_text_log()
+        # The dialogue informs the player of the two choices and the corresponding buttons. 
         adventure.add_to_textlog("Cross (A)   Continue (B)")
         pause(2500)
         adventure.clear_text_log()
+    # Making use of the global variable, the next time the player presses A the game will check if the player has chosen A initially. Because A=1, it means they have chosen A a second time, which leads to a losing ending. A(first choice) -> A(second choice) 
     if A == 1:
         adventure.clear_text_log()
         Tree.set_position(80, 40)
+        # This hides the cave as the player has made another choice. 
         Cave.set_image(img("""
             ........................
                         ........................
@@ -377,8 +425,48 @@ def on_a_pressed():
         adventure.add_to_textlog("There is a strong current pulling you downstream")
         pause(2000)
         adventure.clear_text_log()
-        River.set_image(assets.image("""
-            myImages.image0
+        # Setting the sprite to a skull to indicate the player has lost. 
+        River.set_image(img("""
+            ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
+                        ........................
         """))
         adventure.add_to_textlog("You exhaust yourself fighting the current and drown!!")
         pause(3000)
@@ -386,10 +474,15 @@ def on_a_pressed():
             myImages.image0
         """))
         adventure.clear_text_log()
+        # This signals the end of the game and creates a splash screen that says the player has lost. 
         game.game_over(False)
+    # This if conditional checks if the global variable A is a negative, which would mean that the player has chosen B for their first choice. After pressing A this dialogue appears and shows a losing ending. 
+    # 
+    # B(first choice) -> A(second choice)
     if A == -1:
         adventure.clear_text_log()
         Tree.set_position(80, 40)
+        # This hides the cave as the player has made another choice. 
         Cave.set_image(img("""
             ........................
                         ........................
@@ -447,6 +540,7 @@ def on_a_pressed():
         """))
         pause(3000)
         adventure.clear_text_log()
+        # This signals the end of the game and creates a splash screen that says the player has lost. 
         game.game_over(False)
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
@@ -455,17 +549,24 @@ River: Sprite = None
 Tree: Sprite = None
 B = 0
 A = 0
-# Begin of introduction
+# Beginning of introduction, setting the background colour for the rest of the game 
 scene.set_background_color(11)
+# Creating global variable A to signify the player choosing A initially and sets it to 0 to show that no choice has been made yet. 
 A = 0
+# Creating global variable B to signify the player choosing A initially and sets it to 0 to show that no choice has been made yet. 
 B = 0
+# The first introductory text, adding a sentence of text to the text log that scrolls from the bottom of screen
 adventure.add_to_textlog("Welcome to Page Play! A choose your adventure video game with challenging decisions and surprising endings. ")
+# Pauses to allow time for each dialogue to appear and to be read 
 pause(2000)
+# Clears text log to remove old dialogue and create space for the next line of text 
 adventure.clear_text_log()
 adventure.add_to_textlog("You can interact with this game using 'A' and 'B' to decide between two options. Restart to try different endings! ")
 pause(2000)
 adventure.clear_text_log()
+# Creates a splash screen that signifies the start of the game, waiting for players to press A to begin 
 game.splash("Your adventure awaits...")
+# Creates the first sprite for option A (tree path), that will later be changed. The kind is set to environment to describe that it will act as a sprite for each option. 
 Tree = sprites.create(img("""
         ...................................................................
             ...................................................................
@@ -554,6 +655,7 @@ Tree = sprites.create(img("""
             ...................................................................
     """),
     SpriteKind.Environment)
+# Creates the first sprite for option B (cave path), that will later be changed. The kind is set to environment to describe that it will act as a sprite for each option. 
 River = sprites.create(img("""
         . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -573,7 +675,9 @@ River = sprites.create(img("""
             . . . . . . . . . . . . . . . .
     """),
     SpriteKind.Environment)
+# Set the sprites position to the middle of the screen, as it is a small sprite that will change its appearance for each consequential choice.
 Tree.set_position(80, 35)
+# The river is a large background sprite that needs to cover the entire screen, therefore its X and Y position is very low to appear in the bottom right corner. 
 River.set_position(7, 0)
 Tree.set_stay_in_screen(True)
 adventure.add_to_textlog("You awaken in an open forest clearing, unsure how you ended up there. ")
@@ -582,6 +686,7 @@ adventure.clear_text_log()
 adventure.add_to_textlog("You panic. Realising you had earlier been on a hike with your friends, which are now nowhere to be found. The sun is now almost set.")
 pause(4000)
 adventure.clear_text_log()
+# The first change in sprite appearance as the dialogue change, the sprite changes to match. 
 Tree.set_image(img("""
     ........................
         8..........ff..........8
@@ -624,7 +729,9 @@ Tree.set_image(img("""
         feef....feeefeef....feee
         ffef....fefeffef....fefe
 """))
+# Moves the sprite to an appropriate place to be seen 
 Tree.set_position(60, 40)
+# Changing the appearance of the cave to show the two options, as the player makes the first decision 
 Cave = sprites.create(assets.image("""
     myImage
 """), SpriteKind.Environment)
@@ -635,6 +742,7 @@ adventure.clear_text_log()
 adventure.add_to_textlog("Which will you choose?")
 pause(1000)
 adventure.clear_text_log()
+# The dialogue informs the player of the two choices and the corresponding buttons. 
 adventure.add_to_textlog("Tree (A)       Cave (B)")
 pause(2000)
 adventure.clear_text_log()
