@@ -1,24 +1,14 @@
- 
+To open this project please use this link: https://arcade.makecode.com/S56410-78291-73772-61299
 
+Welcome to Page Play! 
+This is my Working With Data and Code A2 - Code Prototype Project 
 
-> Open this page at [https://williamt22.github.io/working-with-data-and-code--/](https://williamt22.github.io/working-with-data-and-code--/)
+An interactive text-based adventure game where you find yourself stranded in the woods unsure of how you ended up there...
+The game starts with an introduction, pressing A is not neccessary until you see a screen telling you your adventure awaits! 
+Afterwards you will follow dialogue leading to a set of choices, you can then choose between A or B.
+Follow the game through multiple times to attempt each ending.
 
-## Use as Extension
-
-This repository can be added as an **extension** in MakeCode.
-
-* open [https://arcade.makecode.com/](https://arcade.makecode.com/)
-* click on **New Project**
-* click on **Extensions** under the gearwheel menu
-* search for **https://github.com/williamt22/working-with-data-and-code--** and import
-
-## Edit this project ![Build status badge](https://github.com/williamt22/working-with-data-and-code--/workflows/MakeCode/badge.svg)
-
-To edit this repository in MakeCode.
-
-* open [https://arcade.makecode.com/](https://arcade.makecode.com/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/williamt22/working-with-data-and-code--** and click import
+Thank you :) 
 
 ## Blocks preview
 
