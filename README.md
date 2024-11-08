@@ -1,5 +1,4 @@
-To open this project please use this link: https://arcade.makecode.com/S56410-78291-73772-61299
-Comments can be viewed by pressing 'view code' and clicking the comment button on the top left of blocks. 
+To open this project please use this link: https://arcade.makecode.com/S56410-78291-73772-61299. Comments can be viewed by pressing 'view code' and clicking the comment button on the top left of blocks. 
 
 Welcome to Page Play! 
 This is my Working With Data and Code A2 - Code Prototype Project 
